@@ -30,23 +30,27 @@ int main(int argc, char ** argv)
 	bool quit = false;
 	using clock = chrono::steady_clock;
 	auto currentTime = clock::now();
-	auto fixedTime = clock::now();
+	auto lastTime = currentTime;
+	double time = 0;
 
 	engine.CreateObject<Background>();
 
 	while(!quit){
 		currentTime = clock::now();
+		std::chrono::duration<double> frameTime = currentTime - lastTime;
+		lastTime = currentTime;
+
+		time += frameTime.count();
 
 		for (auto* obj: engine.GameObjects){
 			obj->Update();
 		}
 
-		if (currentTime >= fixedTime){
+		if (time >= FIXEDUPDATESPEED){
 			for (auto* obj: engine.GameObjects){
 				obj->FixedUpdate();
 			}
-			fixedTime += std::chrono::duration_cast<clock::duration>
-				(std::chrono::duration<double>(FIXEDUPDATESPEED));
+			time -= FIXEDUPDATESPEED;
 		}
 	}
 
