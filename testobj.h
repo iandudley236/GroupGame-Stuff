@@ -4,7 +4,7 @@
  *  Created on: Nov 28, 2025
  *      Author: iandu
  */
-
+/*
 #ifndef TESTOBJ_H_
 #define TESTOBJ_H_
 
@@ -12,13 +12,13 @@
 #include "Const.h"
 #include "SDL_Plotter.h"
 
-class Background: public Base{
+class Test: public Base{
 private:
     SDL_Plotter Plot;
 
 public:
-	Background();
-	void Start(Engine*) override;
+	Test();
+	void Start(Engine*,SDL_Plotter*) override;
 	void Update() override;
 	void FixedUpdate() override;
 };
@@ -33,32 +33,32 @@ void drawCircle(point loc, int size, color c, SDL_Plotter& g){
 	}
 }
 
-Background::Background(){
+Test::Background(){
 	scaleX = ROW;
 	scaleY = COL;
 	Plot = SDL_Plotter(scaleX,scaleY);
 }
 
-void Background::Start(Engine* eng){
+void Test::Start(Engine* eng){
 	Base::Start(eng);
 
 
 }
-void Background::Update(){
+void Test::Update(){
 
 }
-void Background::FixedUpdate(){
-
+void Test::FixedUpdate(){
+	cout << "Fixxed" << endl;
 }
 
 
-/*
  * class this{
  * 		private:
  * 			int i;
  * 	}
- */
+ *
 
 
 
-#endif /* TESTOBJ_H_ */
+#endif TESTOBJ_H_
+*/

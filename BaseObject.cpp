@@ -8,6 +8,7 @@
 
 #include "BaseObject.h"
 #include "Engine.h"
+#include "SDL_Plotter.h"
 
 
 Base::~Base(){
