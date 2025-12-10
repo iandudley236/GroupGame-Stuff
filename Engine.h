@@ -43,9 +43,14 @@ public:
 		}
 	}
 
-	Base* Find(Base* object){
-		auto obj = std::find(GameObjects.begin(),GameObjects.end(), object);
-		return *obj;
+	template <typename T>
+	T* Find(){
+		for (Base* obj: GameObjects){
+			if (T* casted = dynamic_cast<T*>(obj)){
+				return casted;
+			}
+		}
+		return nullptr;
 	}
 
 	void ClearEngine(){

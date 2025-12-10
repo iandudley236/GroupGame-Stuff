@@ -7,6 +7,7 @@
 
 #ifndef Utils_h
 #define Utils_h
+
 #include "SDL_Plotter.h"
 #include "Const.h"
 

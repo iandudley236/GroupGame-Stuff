@@ -39,8 +39,8 @@ Test::Background(){
 	Plot = SDL_Plotter(scaleX,scaleY);
 }
 
-void Test::Start(Engine* eng){
-	Base::Start(eng);
+void Test::Start(Engine* eng, SDL_Plotter* plot){
+	Base::Start(eng, plot);
 
 
 }

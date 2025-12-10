@@ -10,32 +10,12 @@
 #include "Car.h"
 #include "AICar.h"
 #include "Obstacle.h"
+#include "Collision.h"
 #include <vector>
 #include <cmath>
 
-class CollisionManager {
+class CollisionManager: public Base {
 public:
-    // Check collision between player and AI cars
-    static bool checkCarCollision(const Car& player, const AICar& ai) {
-        point playerLoc = player.getLoc();
-        point aiLoc = ai.getLocation();
-        int playerSize = player.getSize();
-        int aiSize = ai.getSize();
-
-        // Calculate distance between centers
-        int dx = playerLoc.x - aiLoc.x;
-        int dy = playerLoc.y - aiLoc.y;
-        float distance = sqrt(dx*dx + dy*dy);
-
-        // Collision if distance < sum of radii
-        return distance < (playerSize/2 + aiSize/2);
-    }
-
-    // Check collision between player and obstacles
-    static bool checkObstacleCollision(const Car& player, const Obstacle& obstacle) {
-        return obstacle.collidesWith(player);
-    }
-
     // Check all collisions and return what was hit
     static void checkAllCollisions(const Car& player,
                                    std::vector<AICar>& aiCars,
@@ -46,7 +26,7 @@ public:
 
         // Check AI car collisions
         for(auto& ai : aiCars) {
-            if(checkCarCollision(player, ai)) {
+            if(checkCollision(ai, player)) {
                 hitAI = true;
                 break;
             }
@@ -54,7 +34,7 @@ public:
 
         // Check obstacle collisions
         for(auto& obs : obstacles) {
-            if(checkObstacleCollision(player, obs)) {
+            if(checkCollision(obs, player)) {
                 hitObstacle = true;
                 break;
             }
