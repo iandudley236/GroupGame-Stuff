@@ -58,13 +58,14 @@ int main(int argc, char ** argv)
 
 		time += frameTime.count();
 
+
 		for (auto* obj: engine.GameObjects){
-			obj->Update();
+			if (!(obj->GetPaused())) obj->Update();
 		}
 
 		if (time >= FIXEDUPDATESPEED){
 			for (auto* obj: engine.GameObjects){
-				obj->FixedUpdate();
+				if (!(obj->GetPaused())) obj->FixedUpdate();
 			}
 			time -= FIXEDUPDATESPEED;
 		}
@@ -310,6 +311,7 @@ int main(int argc, char ** argv)
         if (g.kbhit()) {
             char c = toupper(g.getKey());
 
+			s
             switch (gameState) {
                 case STATE_START:
                     if (startScreen.handleInput(c)) {

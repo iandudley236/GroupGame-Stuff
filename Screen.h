@@ -10,7 +10,7 @@ class Screen{
 public:
     virtual void update() = 0;
     virtual void draw(SDL_Plotter& g) = 0;
-    virtual bool handleInput(char key) = 0;
+    //virtual bool handleInput(char key) = 0;
     virtual ~Screen() {}
 };
 
@@ -21,7 +21,7 @@ public:
     StartScreen();
     void update() override;
     void draw(SDL_Plotter& g) override;
-    bool handleInput(char key) override;
+    //bool handleInput(char key) override;
 };
 
 class InstructionsScreen : public Screen {
@@ -31,7 +31,7 @@ public:
     InstructionsScreen();
     void update() override;
     void draw(SDL_Plotter& g) override;
-    bool handleInput(char key) override;
+    //bool handleInput(char key) override;
 };
 
 class PauseScreen : public Screen {
@@ -41,7 +41,7 @@ public:
     PauseScreen();
     void update() override;
     void draw(SDL_Plotter& g) override;
-    bool handleInput(char key) override;
+    //bool handleInput(char key) override;
 };
 
 class GameOverScreen : public Screen {
@@ -54,7 +54,7 @@ public:
     void setGameOver(int score, bool aiHit, bool obstacleHit);
     void update() override;
     void draw(SDL_Plotter& g) override;
-    bool handleInput(char key) override;
+    //bool handleInput(char key) override;
 };
 
 class WinScreen : public Screen {
@@ -67,7 +67,7 @@ public:
     void setWin(int score);
     void update() override;
     void draw(SDL_Plotter& g) override;
-    bool handleInput(char key) override;
+    //bool handleInput(char key) override;
 };
 
 

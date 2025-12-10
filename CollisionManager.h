@@ -26,7 +26,7 @@ public:
 
         // Check AI car collisions
         for(auto& ai : aiCars) {
-            if(checkCollision(ai, player)) {
+            if(checkAICarCollision(ai, player)) {
                 hitAI = true;
                 break;
             }
@@ -34,7 +34,7 @@ public:
 
         // Check obstacle collisions
         for(auto& obs : obstacles) {
-            if(checkCollision(obs, player)) {
+            if(checkObstacleCollision(obs, player)) {
                 hitObstacle = true;
                 break;
             }

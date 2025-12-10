@@ -24,8 +24,8 @@ public:
 	Collision(int rs, int re);
 
 	bool checkWallCollision(const Car& car);
-	bool checkCollision(const AICar&, const Car&);
-	bool checkCollision(const Obstacle&, const Car&);
+	bool checkAICarCollision(const AICar&, const Car&);
+	bool checkObstacleCollision(const Obstacle&, const Car&);
 	bool hasCollision(const Car& car, AICar* aiCars, int numAICars);
 };
 
@@ -45,7 +45,7 @@ bool Collision::checkWallCollision(const Car& car) {
 	return false;
 }
 
-bool Collision::checkCollision(const AICar& aiCar, const Car& player) {
+bool Collision::checkAICarCollision(const AICar& aiCar, const Car& player) {
 	point playerLoc = player.getLoc();
 	int playerSize = player.getSize();
 
@@ -68,7 +68,7 @@ bool Collision::checkCollision(const AICar& aiCar, const Car& player) {
 			playerTop < aiBottom);
 }
 
-bool Collision::checkCollision(const Obstacle& obst, const Car& car) const {
+bool Collision::checkObstacleCollision(const Obstacle& obst, const Car& car) const {
 
     point carLoc = car.getLoc();
     int carSize = car.getSize();

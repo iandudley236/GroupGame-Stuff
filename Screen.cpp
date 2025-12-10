@@ -1,18 +1,44 @@
 #include "Screen.h"
 #include <string>
 
+
+// Constructors
 StartScreen::StartScreen() : flashTimer(0) {}
 InstructionsScreen::InstructionsScreen() : scrollOffset(0) {}
 PauseScreen::PauseScreen() : flashTimer(0) {}
-GameOverScreen::GameOverScreen() : finalScore(0), hitAI(false), hitObstacle(false), flashTimer(0) {}
+GameOverScreen::GameOverScreen()
+	: finalScore(0), hitAI(false), hitObstacle(false), flashTimer(0) {}
+WinScreen::WinScreen()
+    : finalScore(0), hitAI(false), hitObstacle(false), flashTimer(0) {}
 
+// Update Override Functions
+void StartScreen::update() { flashTimer++; }
+void InstructionsScreen::update() { scrollOffset++; if(scrollOffset > 300) scrollOffset = 0; }
+void PauseScreen::update() { flashTimer++; }
+void GameOverScreen::update() { flashTimer++; }
+void WinScreen::update() { flashTimer++; }
+
+//// Handle Input Override Functions
+//bool StartScreen::handleInput(char key) { return (toupper(key) == 'S'); }
+//bool InstructionsScreen::handleInput(char key) { return (toupper(key) == 'I'); }
+//bool PauseScreen::handleInput(char key) { return (toupper(key) == 'P'); }
+//bool GameOverScreen::handleInput(char key) { return (toupper(key) == 'C'); }
+//bool WinScreen::handleInput(char key) { return (toupper(key) == 'C'); }
+
+// Set Functions
 void GameOverScreen::setGameOver(int score, bool aiHit, bool obstacleHit) {
     finalScore = score;
     hitAI = aiHit;
     hitObstacle = obstacleHit;
 }
+void WinScreen::setWin(int score) {
+    finalScore = score;
+    hitAI      = false;
+    hitObstacle = false;
+}
 
-void StartScreen::update() { flashTimer++; }
+
+// Draw Override Functions
 void StartScreen::draw(SDL_Plotter& g) {
     color bg(20, 40, 80);
     for(int x = 0; x < ROW; x++) for(int y = 0; y < COL; y++) g.plotPixel(x, y, bg);
@@ -22,10 +48,6 @@ void StartScreen::draw(SDL_Plotter& g) {
     FontRenderer::drawSmall(g, 100, COL/2 - 15, white, "Press I for Instructions", this->flashTimer);
     FontRenderer::drawSmall(g, 155, COL/2 + 15, white, "Press S to START", this->flashTimer);
 }
-
-bool StartScreen::handleInput(char key) { return (toupper(key) == 'S'); }
-
-void InstructionsScreen::update() { scrollOffset++; if(scrollOffset > 300) scrollOffset = 0; }
 void InstructionsScreen::draw(SDL_Plotter& g) {
     color bg(30, 30, 50);
     for(int x = 0; x < ROW; x++) for(int y = 0; y < COL; y++) g.plotPixel(x, y, bg);
@@ -41,9 +63,6 @@ void InstructionsScreen::draw(SDL_Plotter& g) {
     FontRenderer::drawSmall(g, 30, COL-130, cyan, "Press B to go BACK", 0);
 }
 
-bool InstructionsScreen::handleInput(char key) { return (toupper(key) == 'I'); }
-
-void PauseScreen::update() { flashTimer++; }
 void PauseScreen::draw(SDL_Plotter& g) {
     for(int x = 0; x < ROW; x++) for(int y = 0; y < COL; y++) g.plotPixel(x, y, 80, 80, 80);
 
@@ -53,9 +72,6 @@ void PauseScreen::draw(SDL_Plotter& g) {
     FontRenderer::drawSmall(g, 140, COL/2 + 50, cyan, "Press B to go BACK", 0);
 }
 
-bool PauseScreen::handleInput(char key) { return (toupper(key) == 'P'); }
-
-void GameOverScreen::update() { flashTimer++; }
 void GameOverScreen::draw(SDL_Plotter& g) {
     for(int x = 0; x < ROW; x++) for(int y = 0; y < COL; y++) g.plotPixel(x, y, 20, 20, 20);
 
@@ -77,19 +93,6 @@ void GameOverScreen::draw(SDL_Plotter& g) {
     FontRenderer::drawSmall(g, 140, COL - 90, white, "Press C to Restart", this->flashTimer);
 }
 
-bool GameOverScreen::handleInput(char key) { return (toupper(key) == 'C'); }
-
-WinScreen::WinScreen()
-    : finalScore(0), hitAI(false), hitObstacle(false), flashTimer(0) {}
-
-void WinScreen::setWin(int score) {
-    finalScore = score;
-    hitAI      = false;
-    hitObstacle = false;
-}
-
-void WinScreen::update() { flashTimer++; }
-
 void WinScreen::draw(SDL_Plotter& g) {
     // Dark green-ish background
     for(int x = 0; x < ROW; x++) {
@@ -110,8 +113,9 @@ void WinScreen::draw(SDL_Plotter& g) {
                             "Press C to Restart", this->flashTimer);
 }
 
-bool WinScreen::handleInput(char key) {
-    return (toupper(key) == 'C');
-}
+
+
+
+
 
 

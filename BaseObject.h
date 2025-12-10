@@ -17,15 +17,24 @@ protected:
 	SDL_Plotter* sdlPlot;
 	double positionX = 0, positionY = 0;
 	double scaleX = 0, scaleY = 0;
+	bool paused;
 
 public:
 	virtual void Start(Engine* eng,SDL_Plotter* plot){
 		engine = eng;
 		sdlPlot = plot;
+		paused = false;
 	}
 	virtual void Update() = 0;
 	virtual void FixedUpdate() = 0;
 	virtual ~Base();
+
+	virtual bool GetPaused(){
+		return paused;
+	}
+	virtual void SetPaused(bool p){
+		paused = p;
+	}
 };
 
 

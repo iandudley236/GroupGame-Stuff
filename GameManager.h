@@ -29,6 +29,20 @@ private:
 	Screen* currentScreen;
 	PointsManager* pointManager;
 	int score = 0;
+	bool hitAI = false, hitObstacle = false;
+
+
+	// Helper Functions for screen management
+	template<typename T>
+	void SwitchScreen(Screen*&);
+	void PrepCurrentScreen();
+
+	void SwitchCheck(char);
+
+	// Helper Functions for Play
+	void PrepPlay();
+	void Play();
+	void Pause();
 
 public:
 	GameManager();
@@ -36,8 +50,6 @@ public:
 	void Update() override;
 	void FixedUpdate() override;
 
-	void SetScreenToPlay();
-	void SwitchScreen(char);
 };
 
 GameManager::GameManager():currentScreen(),pointManager(){
@@ -48,41 +60,66 @@ void GameManager::Start(Engine* eng, SDL_Plotter* plot){
 	Base::Start(eng, plot);
 
 	currentScreen = new StartScreen();
-	engine->CreateObject<Background>();
-	engine->CreateObject<Car>();
-	engine->CreateObject<LapCounter>();
-
 }
 void GameManager::Update() {
 	if (currentScreen != nullptr){
 		currentScreen->update();
 		currentScreen->draw(*sdlPlot);
 	}
+	// manage key presses
+	if (sdlPlot->kbhit()) {
+		SwitchCheck(toupper(sdlPlot->getKey()));
+	}
 }
 void GameManager::FixedUpdate() {
-	// if pass car,
+
 }
 
-void GameManager::SetScreenToPlay(){
+template <typename T>
+void GameManager::SwitchScreen(Screen*& screen){
+	delete screen;
+	screen = new T();
+}
+
+// Manages the switches between Screens by input only, not during play
+void GameManager::SwitchCheck(char c){
+	if (!currentScreen){
+		if (c == 'P') Pause();
+	}
+	else if(dynamic_cast<StartScreen*>(currentScreen)){
+		if (c == 'I') SwitchScreen<InstructionsScreen>(currentScreen);
+		else if (c == 'S') PrepPlay();
+	}
+	else if(dynamic_cast<InstructionsScreen*>(currentScreen)){
+		if (c == 'B') SwitchScreen<StartScreen>(currentScreen);
+		else if (c == 'S') PrepPlay();
+	}
+	else if(dynamic_cast<PauseScreen*>(currentScreen)){
+		if (c == 'B') SwitchScreen<StartScreen>(currentScreen);
+		else if (c == 'P') PrepCurrentScreen();
+	}
+	else if(dynamic_cast<GameOverScreen*>(currentScreen)){
+		if (c == 'C') PrepPlay();
+	}
+	else if(dynamic_cast<WinScreen*>(currentScreen)){
+		if (c == 'C') PrepPlay();
+	}
+
+}
+
+void GameManager::Pause(){
+	for (auto* obj: engine->GameObjects){
+		obj->SetPaused(true);
+	}
+	this->SetPaused(false);
+}
+
+void GameManager::PrepPlay(){
 	delete currentScreen;
 	currentScreen = nullptr;
 }
-void GameManager::SwitchScreen(char c){
-	if (currentScreen != nullptr){
-		delete currentScreen;
-		currentScreen = nullptr;
-	}
-	switch (c){
-	case 'I': currentScreen = new InstructionsScreen(); break;
-	case 'S': currentScreen = new StartScreen(); break;
-	case 'P': currentScreen = new PauseScreen();break;
-	case 'O': currentScreen = new GameOverScreen();break;
-	case 'W': currentScreen = new WinScreen();break;
-	}
 
-}
-
-void Play(){
+void GameManager::Play(){
 
 }
 /*
