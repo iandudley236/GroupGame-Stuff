@@ -82,9 +82,6 @@ void Obstacle::Update(){
 void Obstacle::FixedUpdate(){
 	moveDown();
 	draw(*sdlPlot);
-	if (isOffScreen()){
-		delete this;
-	}
 }
 
 

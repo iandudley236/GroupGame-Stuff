@@ -22,9 +22,11 @@ const double POINTS_PER_FRAME_MULTIPLIER = 0.05;
 const int POINTS_CAR_PASS  = 10;
 const int POINTS_OBSTACLE  = 5;
 
-const double FIXEDUPDATESPEED = 1.0/120.0;
+const double FIXEDUPDATESPEED = 1.0/60.0;
 
 const int RACEDISTANCE = 300;
+
+const int BASECOLLISIONCOOLDOWN = 120;
 
 
 #endif /* Const_h */

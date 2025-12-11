@@ -33,13 +33,11 @@ void AICar::Start(Engine* eng, SDL_Plotter* plot){
 	respawn();
 }
 void AICar::Update(){
-
+	draw(*sdlPlot);
+	updateAI();
 }
 void AICar::FixedUpdate(){
-	draw(*sdlPlot);
-	if (isOffScreen()){
-		delete this;
-	}
+
 }
 
 void AICar::initializeLanes() {
@@ -85,7 +83,7 @@ void AICar::updateLaneChange() {
     }
 }
 
-void AICar::updateAI(int backgroundOffset) {
+void AICar::updateAI() {
     _prvLoc.x = _loc.x;
     _prvLoc.y = _loc.y;
 

@@ -16,7 +16,6 @@
 #include "Car.h"
 #include "AICar.h"
 #include "Obstacle.h"
-#include "Collision.h"
 #include "Const.h"
 #include "Background.h"
 #include "LapCounter.h"
@@ -45,13 +44,15 @@ int main(int argc, char ** argv)
 
 	SDL_Plotter g(ROW, COL);
 	Engine engine(&g);
-	bool quit = false;
+
+	engine.CreateObject<GameManager>();
+
 	using clock = chrono::steady_clock;
 	auto currentTime = clock::now();
 	auto lastTime = currentTime;
 	double time = 0;
 
-	while(!quit){
+	while (!g.getQuit()){
 		currentTime = clock::now();
 		std::chrono::duration<double> frameTime = currentTime - lastTime;
 		lastTime = currentTime;
@@ -72,7 +73,7 @@ int main(int argc, char ** argv)
 	}
 
 
-	engine.ClearEngine();
+	engine.ClearEngine(true);
 
 	return 0;
 }

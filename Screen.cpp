@@ -1,6 +1,7 @@
 #include "Screen.h"
 #include <string>
 
+#include <iostream>
 
 // Constructors
 StartScreen::StartScreen() : flashTimer(0) {}

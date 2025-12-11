@@ -47,7 +47,7 @@ public:
 	void Update() override;
 	void FixedUpdate() override;
 
-    void updateAI(int backgroundOffset);
+    void updateAI();
     void draw(SDL_Plotter& g);
 
     // Getters for collision detection

@@ -17,7 +17,7 @@ protected:
 	SDL_Plotter* sdlPlot;
 	double positionX = 0, positionY = 0;
 	double scaleX = 0, scaleY = 0;
-	bool paused;
+	bool paused = false;
 
 public:
 	virtual void Start(Engine* eng,SDL_Plotter* plot){

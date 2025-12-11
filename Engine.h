@@ -53,9 +53,18 @@ public:
 		return nullptr;
 	}
 
-	void ClearEngine(){
-		for (auto object: GameObjects){
-			delete object;
+	void ClearEngine(bool all, Base* save = nullptr){
+		if (all){
+			for (auto object: GameObjects){
+				delete object;
+			}
+		}
+		else {
+			for (auto object: GameObjects){
+				if (object != save){
+					delete object;
+				}
+			}
 		}
 	}
 
